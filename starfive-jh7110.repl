@@ -1,0 +1,64 @@
+s7: CPU.RiscV64 @ sysbus
+    cpuType: "rv64imac"
+    hartId: 0
+    privilegeArchitecture: PrivilegeArchitecture.Priv1_11
+    timeProvider: clint
+
+u74_1: CPU.RiscV64 @ sysbus
+    cpuType: "rv64gbc"
+    hartId: 1
+    privilegeArchitecture: PrivilegeArchitecture.Priv1_11
+    timeProvider: clint
+
+u74_2: CPU.RiscV64 @ sysbus
+    cpuType: "rv64gbc"
+    hartId: 2
+    privilegeArchitecture: PrivilegeArchitecture.Priv1_11
+    timeProvider: clint
+
+u74_3: CPU.RiscV64 @ sysbus
+    cpuType: "rv64gbc"
+    hartId: 3
+    privilegeArchitecture: PrivilegeArchitecture.Priv1_11
+    timeProvider: clint
+
+u74_4: CPU.RiscV64 @ sysbus
+    cpuType: "rv64gbc"
+    hartId: 4
+    privilegeArchitecture: PrivilegeArchitecture.Priv1_11
+    timeProvider: clint
+
+clint: IRQControllers.CoreLevelInterruptor  @ sysbus 0x02000000
+    [0,1] -> u74_1@[3,7]
+    frequency: 10000000
+
+plic: IRQControllers.PlatformLevelInterruptController @ sysbus 0x0c000000
+    [0, 1] -> u74_1@[11, 9]
+    [2, 3] -> u74_2@[11, 9]
+    numberOfSources: 127
+    numberOfContexts: 4
+    prioritiesEnabled: true
+
+uart0: UART.NS16550@sysbus 0x10000000
+    wideRegisters: true
+    IRQ -> plic@32
+
+uart1: UART.NS16550@sysbus 0x10010000
+    wideRegisters: true
+    IRQ -> plic@33
+
+uart2: UART.NS16550@sysbus 0x10020000
+    wideRegisters: true
+    IRQ -> plic@34
+
+uart3: UART.NS16550@sysbus 0x12000000
+    wideRegisters: true
+    IRQ -> plic@45
+
+uart4: UART.NS16550@sysbus 0x12010000
+    wideRegisters: true
+    IRQ -> plic@45
+
+uart5: UART.NS16550@sysbus 0x12020000
+    wideRegisters: true
+    IRQ -> plic@46

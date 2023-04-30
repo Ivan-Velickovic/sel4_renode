@@ -1,0 +1,17 @@
+$name?="Pine64 Star64 Model-A 4GB"
+
+using sysbus
+mach create $name
+machine LoadPlatformDescription @star64-4gb.repl
+
+showAnalyzer uart0
+
+$dtb=@binaries/star64.dtb
+
+macro reset
+"""
+    sysbus LoadBinary $dtb 0x50000000
+    sysbus LoadELF @binaries/sel4test-driver-image-riscv-star64
+    s7 SetRegisterUnsafe 11 0x50000000
+"""
+runMacro $reset

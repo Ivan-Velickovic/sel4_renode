@@ -1,0 +1,16 @@
+:name: Cortex-A53
+:description: This script runs the QEMU ARM virt seL4test on a 64-bit ARM Cortex-A53.
+
+using sysbus
+$name?="ARM Cortex-A53"
+mach create $name
+
+machine LoadPlatformDescription @cortex-a53.repl
+
+showAnalyzer uart0
+
+macro reset
+"""
+    sysbus LoadELF @binaries/sel4test-driver-image-arm-qemu-arm-virt
+"""
+runMacro $reset

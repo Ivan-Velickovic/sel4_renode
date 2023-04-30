@@ -1,0 +1,4 @@
+using "starfive-jh7110.repl"
+
+ddr: Memory.MappedMemory @sysbus 0x40000000
+    size: 0x100000000

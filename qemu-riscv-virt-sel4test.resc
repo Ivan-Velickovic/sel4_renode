@@ -1,0 +1,20 @@
+:name: QEMU RISC-V virt
+:description: This script runs the QEMU RISC-V virt 64-bit seL4test
+
+using sysbus
+$name?="QEMU RISC-V virt"
+mach create $name
+
+machine LoadPlatformDescription @qemu-riscv-virt.repl
+
+showAnalyzer uart0
+
+macro reset
+"""
+    sysbus LoadBinary @binaries/qemu-riscv-virt.dtb 0x90000000
+    sysbus LoadELF @binaries/sel4test-driver-image-riscv-qemu-riscv-virt
+    sysbus LoadSymbolsFrom @binaries/sel4test-driver-image-riscv-qemu-riscv-virt
+
+    cpu SetRegisterUnsafe 11 0x90000000
+"""
+runMacro $reset
