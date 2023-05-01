@@ -10,8 +10,9 @@ $dtb=@binaries/star64.dtb
 
 macro reset
 """
-    sysbus LoadBinary $dtb 0x50000000
+    sysbus LoadBinary $dtb 0x70000000
     sysbus LoadELF @binaries/sel4test-driver-image-riscv-star64
-    s7 SetRegisterUnsafe 11 0x50000000
+    s7 SetRegisterUnsafe 11 0x70000000
+    u74_1 SetRegisterUnsafe 11 0x70000000
 """
 runMacro $reset
