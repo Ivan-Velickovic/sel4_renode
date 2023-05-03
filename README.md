@@ -32,7 +32,14 @@ renode -e "start @qemu-riscv-virt-sel4test.resc" --console
 
 #### SiFive HiFive Unleashed
 
-TODO
+```sh
+renode -e "start @hifive-unleashed-sel4test.resc" --console
+```
+
+Looks like hart switching does not work on Renode (at least from what I can tell) so
+when the OpenSBI booting hart ID does not match seL4's `CONFIG_FIRST_HART_ID`, the
+whole system halts without getting past the hart switching to seL4 and seL4test
+unfortunately.
 
 #### Pine64 Star64
 
