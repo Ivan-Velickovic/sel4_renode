@@ -11,6 +11,11 @@ showAnalyzer uart0
 
 macro reset
 """
+    # Need to enable the UART first, however I don't quite
+    # understand *why* we need to do this, shouldn't it already
+    # be on? Perhaps QEMU turns it on by default and seL4 assumes
+    # it is on.
+	uart0 WriteDoubleWord 0x30 0x301
     sysbus LoadELF @binaries/sel4test-driver-image-arm-qemu-arm-virt
 """
 runMacro $reset
