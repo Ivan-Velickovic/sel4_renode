@@ -16,6 +16,9 @@ macro reset
     # be on? Perhaps QEMU turns it on by default and seL4 assumes
     # it is on.
 	uart0 WriteDoubleWord 0x30 0x301
+    uart0 WriteDoubleWord 0x2c 0x40
+    cpu SetAvailableExceptionLevels true false
+    # logLevel 3 sysbus.gic
     sysbus LoadELF @binaries/sel4test-driver-image-arm-qemu-arm-virt
 """
 runMacro $reset

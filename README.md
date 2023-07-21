@@ -53,34 +53,5 @@ TODO
 renode -e "start @cortex-a53-sel4test.resc" --console
 ```
 
-Renode recently got 64-bit ARM support, but unfortunately I haven't been able to get it
-working yet, here is the UART output:
-
-```
-Not in hyp mode, cannot reset CNTVOFF_EL2
-ELF-loader started on CPU: ARM Ltd. Cortex-A53 r0p4
-  paddr=[40a3d000..40f130b7]
-No DTB passed in from boot loader.
-Looking for DTB in CPIO archive...found at 40b6aee8.
-Loaded DTB from 40b6aee8.
-   paddr=[4023f000..40240fff]
-ELF-loading image 'kernel' to 40000000
-  paddr=[40000000..4023efff]
-  vaddr=[ffffff8040000000..ffffff804023efff]
-  virt_entry=ffffff8040000000
-ELF-loading image 'sel4test-driver' to 40241000
-  paddr=[40241000..40647fff]
-  vaddr=[400000..806fff]
-  virt_entry=40e700
-Enabling MMU and paging
-Jumping to kernel-image entry point...
-```
-
-And here is the log from Renode:
-```
-16:58:57.8464 [WARNING] sysbus: [cpu: 0xFFFFFF8040000000] ReadByte from non existing peripheral at 0xFFFFFF8040000000.
-16:58:57.8464 [ERROR] cpu: CPU abort [PC=0xFFFFFF8040000000]: Trying to execute code outside RAM or ROM at 0xFFFFFF8040000000.
-```
-
-From this it seems like there is something going wrong when configuring the MMU and jumping to the
-kernel as `0xFFFFFF8040000000` represents the virtual address of the kernel entry point.
+For AArch64 it looks like Renode can successfully start and run sel4test, the main problem
+right now is that the simulation is *extremely* slow.
